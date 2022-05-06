@@ -22,8 +22,8 @@ int main()
     int n, m;
     cout << "\nEnter the number of rows and columns - ";
     cin >> n >> m;
-    int *matrix[n];
-    bool *visited[n];
+    int **matrix = new int *[n];
+    bool **visited = new bool *[n];
     for (int i = 0; i < n; i++)
     {
         matrix[i] = new int[m];
