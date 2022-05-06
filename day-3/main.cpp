@@ -3,7 +3,7 @@ using namespace std;
 
 int dfs(int n, int m, int **matrix, bool **visited, int paths[4][2], int i, int j)
 {
-    if (i < 0 || i >= n || j < 0 || j >= m or matrix[i][j] == 0 || visited[i][j])
+    if (i < 0 || i >= n || j < 0 || j >= m || matrix[i][j] == 0 || visited[i][j])
     {
         return 0;
     }
@@ -58,7 +58,7 @@ int main()
         }
     }
     cout << "\nNumber of groups - " << count << "\n";
-    cout << "The groups are \n";
+    cout << "The groups are - ";
     for (int i = 0; i < count; i++)
     {
         cout << groups[i] << " ";
