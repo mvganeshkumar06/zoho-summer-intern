@@ -34,7 +34,7 @@ public:
         outStream << "Model - " << vehicle.model << "\n";
         outStream << "Type - " << vehicle.vType << "\n";
         outStream << "Color - " << vehicle.color << "\n";
-        outStream << "Price - " << vehicle.price << "\n";
+        outStream << "Price - " << vehicle.price << "\n\n";
         return outStream;
     }
     bool operator<(const Vehicle &vehicle)
@@ -97,10 +97,10 @@ int main()
 {
     Car c1(PETROL, "Maruthi", "M123", "Black", 40, 980000, 2, SUV, 4);
     Bike b1(EV, "Honda", "H123", "Blue", 50, 80000, 65, MOTORBIKE, 2);
-    cout << "Number of wheels for car - " << c1.getNumOfWheels() << "\n";
-    cout << "Number of wheels for bike - " << b1.getNumOfWheels() << "\n";
+    cout << "\nNumber of wheels for car - " << c1.getNumOfWheels() << "\n";
+    cout << "Number of wheels for bike - " << b1.getNumOfWheels() << "\n\n";
     cout << "Car price is less - " << (c1 < b1) << "\n";
-    cout << "Car price is more - " << (c1 > b1) << "\n";
+    cout << "Car price is more - " << (c1 > b1) << "\n\n";
     cout << "Car information \n"
          << c1;
     cout << "Bike information \n"
