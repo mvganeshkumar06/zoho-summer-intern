@@ -53,8 +53,8 @@ public:
 
             for (const char &ch : name)
             {
-                bool isAlphabet = (ch >= 97 && ch <= 122) || (ch >= 65 && ch <= 90), isDigit = (ch >= 48 && ch <= 57), isSpecialChar = !isAlphabet && !isDigit;
-                if (isSpecialChar)
+                bool isAlphabet = (ch >= 97 && ch <= 122) || (ch >= 65 && ch <= 90);
+                if (!isAlphabet)
                 {
                     throw NameNotValidException();
                 }
