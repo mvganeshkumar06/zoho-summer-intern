@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <exception>
 using namespace std;
 
 class MyException : public exception
