@@ -21,7 +21,7 @@ public:
         this->light = Device(devices[1]);
         this->door = Device(devices[2]);
     }
-    Sensor(string &name) : name(name), value(20.2f), batteryLevel(5) {}
+    Sensor(string &name) : name(name), batteryLevel(3), status(OFFLINE), value(20.2f) {}
     void setStatus(Status status)
     {
         this->status = status;

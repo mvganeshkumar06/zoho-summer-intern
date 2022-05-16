@@ -138,7 +138,7 @@ public:
         }
         else
         {
-            cout << "\nInvalid syntax for task.\n";
+            cout << "\nInvalid syntax for event.\n";
         }
         if (sensor.batteryLevel == 0)
         {
@@ -166,15 +166,15 @@ public:
             }
             else if (event[0] == 'm')
             {
-                executeEvent(temperature, event[1]);
+                executeEvent(motion, event[1]);
             }
             else if (event[0] == 'w')
             {
-                executeEvent(temperature, event[1]);
+                executeEvent(waterLevel, event[1]);
             }
             else if (event[0] == 'g')
             {
-                executeEvent(temperature, event[1]);
+                executeEvent(gasLevel, event[1]);
             }
             else
             {

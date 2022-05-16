@@ -13,7 +13,7 @@ public:
     string name;
     Status status;
     Device() {}
-    Device(string &name) : name(name) {}
+    Device(string &name) : name(name), status(OFFLINE) {}
     void turnOn()
     {
         if (status == OFFLINE)
