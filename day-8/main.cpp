@@ -15,23 +15,21 @@ public:
     }
     T *getConnection(string &number)
     {
-        T *connection = NULL;
         for (auto &e : connections)
         {
-            if (e.number == number)
+            if (e.isValid(number))
             {
-                connection = &e;
-                break;
+                return &e;
             }
         }
-        return connection;
+        return NULL;
     }
     void payBill(string &number)
     {
         T *connection = getConnection(number);
         if (connection != NULL)
         {
-            cout << "\nBill payed $" << connection->amount << " for the number " << number << ".\n";
+            cout << "\nBill payed $" << connection->amount << " for the number " << connection->number << ".\n";
             connection->amount = 0;
         }
         else
@@ -70,8 +68,9 @@ int main()
     cout << "\nEnter STD code and landline number - ";
     cin >> l.stdCode >> l.number;
     bpl.addConnection(l);
-    bpl.updateBill(l.number, 100);
-    bpl.payBill(l.number);
+    string landlineNumber = l.stdCode + l.number;
+    bpl.updateBill(landlineNumber, 100);
+    bpl.payBill(landlineNumber);
 
     return 0;
 }

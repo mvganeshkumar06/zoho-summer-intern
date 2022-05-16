@@ -5,10 +5,14 @@ class Mobile
 {
 public:
     string number;
-    int amount;
+    float amount;
     Mobile() : amount(0) {}
-    void setAmount(int amount)
+    void setAmount(float amount)
     {
         this->amount = amount;
+    }
+    bool isValid(string &number)
+    {
+        return this->number == number;
     }
 };
