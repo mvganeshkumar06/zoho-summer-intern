@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-enum vehicleType
+enum VehicleType
 {
     PETROL,
     DIESEL,
@@ -47,7 +47,7 @@ public:
     }
 };
 
-enum carType
+enum CarType
 {
     SUV,
     SEDAN
@@ -70,7 +70,7 @@ public:
     }
 };
 
-enum bikeType
+enum BikeType
 {
     SCOOTER,
     MOTORBIKE,
