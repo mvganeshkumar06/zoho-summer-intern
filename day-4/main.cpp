@@ -4,19 +4,19 @@ using namespace std;
 class Rectangle
 {
 public:
-    int *left, *top, *width, *height, *area;
+    int *left, *top, *width, *height, *area = NULL;
     Rectangle() : left(new int(0)), top(new int(0)), width(new int(0)), height(new int(0)) {}
     Rectangle(int width, int height) : left(new int(0)), top(new int(0)), width(new int(width)), height(new int(height)) {}
     Rectangle(int left, int top, int width, int height) : left(new int(left)), top(new int(top)), width(new int(width)), height(new int(height)) {}
     Rectangle(float left, float top, float width, float height) : left(new int(round(left))), top(new int(round(top))), width(new int(round(width))), height(new int(round(height))) {}
     Rectangle(Rectangle &rectangle)
     {
-        left = rectangle.left;
-        top = rectangle.top;
-        width = rectangle.width;
-        height = rectangle.height;
-        rectangle.area = new int((*width) * (*height));
-        area = rectangle.area;
+        left = new int(*rectangle.left);
+        top = new int(*rectangle.top);
+        width = new int(*rectangle.width);
+        height = new int(*rectangle.height);
+        rectangle.area = new int((*rectangle.width) * (*rectangle.height));
+        area = new int(*rectangle.area);
     }
     ~Rectangle()
     {
@@ -29,7 +29,10 @@ public:
         cout << "Top - " << *top << "\n";
         cout << "Width - " << *width << "\n";
         cout << "Height - " << *height << "\n";
-        cout << "Area - " << *area << "\n\n";
+        if (area != NULL)
+        {
+            cout << "Area - " << *area << "\n\n";
+        }
     }
 };
 
