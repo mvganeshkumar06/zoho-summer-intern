@@ -65,18 +65,6 @@ public:
     {
         return seatType;
     }
-    void setSeats(vector<vector<char>> &seats)
-    {
-        this->seats = seats;
-    }
-    void setSeatsFilled(vector<vector<bool>> &seatsFilled)
-    {
-        this->seatsFilled = seatsFilled;
-    }
-    void setSeatsWithMeal(vector<vector<bool>> &seatsWithMeal)
-    {
-        this->seatsWithMeal = seatsWithMeal;
-    }
     int getSize()
     {
         return seats.size();

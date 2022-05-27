@@ -1,2 +1,1 @@
-Economy {3,1,2} 10
 Business {2,2,2} 15

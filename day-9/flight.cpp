@@ -11,14 +11,10 @@ class Flight
     Seat business;
 
 public:
-    Flight(string id, string source, string destination, int economyBasePrice, int economyRow, int economyColumn, vector<int> &economyArrangement, int businessBasePrice, int businessRow, int businessColumn, vector<int> &businessArrangement)
-    {
-        this->id = id;
-        this->source = source;
-        this->destination = destination;
-        this->economy = Seat(ECONOMY, economyBasePrice, economyRow, economyColumn, economyArrangement);
-        this->business = Seat(BUSINESS, businessBasePrice, businessRow, businessColumn, businessArrangement);
-    }
+    bool isEconomyAvailable;
+    bool isBusinessAvailable;
+
+    Flight(string id, string source, string destination) : id(id), source(source), destination(destination), isEconomyAvailable(false), isBusinessAvailable(false) {}
     string getId()
     {
         return id;
@@ -35,9 +31,19 @@ public:
     {
         return economy;
     }
+    void setEconomy(int price, int row, int column, vector<int> &arrangement)
+    {
+        this->economy = Seat(ECONOMY, price, row, column, arrangement);
+        isEconomyAvailable = true;
+    }
     Seat &getBusiness()
     {
         return business;
+    }
+    void setBusiness(int price, int row, int column, vector<int> &arrangement)
+    {
+        this->business = Seat(BUSINESS, price, row, column, arrangement);
+        isBusinessAvailable = true;
     }
     bool isAvailable(string &source, string &destination)
     {
@@ -45,80 +51,122 @@ public:
     }
     bool isBusinessClassAloneAvailable()
     {
-        return (economy.getSize() == 0) && (business.getSize() > 0);
+        return !isEconomyAvailable && isBusinessAvailable;
     }
     void printAvailableSeats()
     {
-        cout << "\nThe available economy seats are - \n";
-        economy.printAvailableSeats();
-        cout << "\nThe available business seats are - \n";
-        business.printAvailableSeats();
+        if (isEconomyAvailable)
+        {
+            cout << "\nThe available economy seats are - \n";
+            economy.printAvailableSeats();
+        }
+        if (isBusinessAvailable)
+        {
+            cout << "\nThe available business seats are - \n";
+            business.printAvailableSeats();
+        }
     }
     void printSeatsWithMeal()
     {
-        cout << "\nThe economy seats with meal booking are - \n";
-        economy.printSeatsWithMeal();
-        cout << "\nThe business seats with meal booking are - \n";
-        business.printSeatsWithMeal();
+        if (isEconomyAvailable)
+        {
+            cout << "\nThe economy seats with meal booking are - \n";
+            economy.printSeatsWithMeal();
+        }
+        if (isBusinessAvailable)
+        {
+            cout << "\nThe business seats with meal booking are - \n";
+            business.printSeatsWithMeal();
+        }
     }
     bool bookSeat(SeatType &seatType, int row, int column)
     {
         if (seatType == ECONOMY)
         {
-            if (economy.isValidSeatParams(row, column))
+            if (isEconomyAvailable)
             {
-                if (!economy.isSeatFilled(row, column))
+                if (economy.isValidSeatParams(row, column))
                 {
-                    economy.fillSeat(row, column);
-                    return true;
+                    if (!economy.isSeatFilled(row, column))
+                    {
+                        economy.fillSeat(row, column);
+                        return true;
+                    }
+                    cout << "\nSeat already booked\n";
+                    return false;
                 }
-                cout << "\nSeat already booked\n";
+                cout << "\nInvalid seat number\n";
                 return false;
             }
-            cout << "\nInvalid seat number\n";
+            cout << "\nEconomy seats are not available\n";
             return false;
         }
-        if (business.isValidSeatParams(row, column))
+        else if (seatType == BUSINESS)
         {
-            if (!business.isSeatFilled(row, column))
+            if (isBusinessAvailable)
             {
-                business.fillSeat(row, column);
-                return true;
+                if (business.isValidSeatParams(row, column))
+                {
+                    if (!business.isSeatFilled(row, column))
+                    {
+                        business.fillSeat(row, column);
+                        return true;
+                    }
+                    cout << "\nSeat already booked\n";
+                    return false;
+                }
+                cout << "\nInvalid seat number\n";
+                return false;
             }
-            cout << "\nSeat already booked\n";
+            cout << "\nBusiness seats are not available\n";
             return false;
         }
-        cout << "\nInvalid seat number\n";
+        cout << "\nInvalid seat type\n";
         return false;
     }
     bool cancelSeat(SeatType &seatType, int row, int column)
     {
         if (seatType == ECONOMY)
         {
-            if (economy.isValidSeatParams(row, column))
+            if (isEconomyAvailable)
             {
-                if (economy.isSeatFilled(row, column))
+                if (economy.isValidSeatParams(row, column))
                 {
-                    economy.emptySeat(row, column);
-                    return true;
+                    if (economy.isSeatFilled(row, column))
+                    {
+                        economy.emptySeat(row, column);
+                        return true;
+                    }
+                    cout << "\nSeat not yet booked\n";
+                    return false;
                 }
-                cout << "\nSeat not yet booked\n";
+                cout << "\nInvalid seat number\n";
                 return false;
             }
-            cout << "\nInvalid seat number\n";
+            cout << "\nEconomy seats are not available\n";
             return false;
         }
-        if (business.isValidSeatParams(row, column))
+        else if (seatType == BUSINESS)
         {
-            if (business.isSeatFilled(row, column))
+            if (isBusinessAvailable)
             {
-                business.emptySeat(row, column);
-                return true;
+                if (business.isValidSeatParams(row, column))
+                {
+                    if (business.isSeatFilled(row, column))
+                    {
+                        business.emptySeat(row, column);
+                        return true;
+                    }
+                    cout << "\nSeat not yet booked\n";
+                    return false;
+                }
+                cout << "\nInvalid seat number\n";
+                return false;
             }
-            cout << "\nSeat not yet booked\n";
+            cout << "\nBusiness seats are not available\n";
             return false;
         }
-        cout << "\nInvalid seat number\n";
+        cout << "\nInvalid seat type\n";
         return false;
     }
     void printDetails()

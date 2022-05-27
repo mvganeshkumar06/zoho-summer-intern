@@ -1,22 +1,8 @@
 #include <bits/stdc++.h>
 #include "type.cpp"
+#include "file-content.cpp"
 #include "flight-ticket-booking.cpp"
 using namespace std;
-
-void printOptions()
-{
-    cout << "\nOptions\n";
-    cout << "1 - List flights.\n";
-    cout << "2 - Search flights based on location.\n";
-    cout << "3 - Search flights based on business class.\n";
-    cout << "4 - Print available seats in a flight.\n";
-    cout << "5 - Book seats in a flight.\n";
-    cout << "6 - Print seats with meal order.\n";
-    cout << "7 - Print booking summary.\n";
-    cout << "8 - Cancel seats in a flight.\n";
-    cout << "9 - Exit.\n";
-    cout << "\nChoose an option from above - ";
-}
 
 void split(string &line, char delimiter, vector<string> &tokens)
 {
@@ -25,6 +11,61 @@ void split(string &line, char delimiter, vector<string> &tokens)
     while (getline(ss, token, delimiter))
     {
         tokens.push_back(token);
+    }
+}
+
+void getFileContent(string &line, FileContent &fileContent)
+{
+    vector<string> fileContentTokens;
+    split(line, ' ', fileContentTokens);
+
+    string type = fileContentTokens[0], arrangementContent = fileContentTokens[1];
+    int row = stoi(fileContentTokens[2]);
+
+    SeatType seatType;
+    if (type == "Economy")
+    {
+        seatType = ECONOMY;
+    }
+    else
+    {
+        seatType = BUSINESS;
+    }
+
+    fileContent.setSeatType(seatType);
+    fileContent.setRow(row);
+
+    string arrangementConfig = arrangementContent.substr(1, arrangementContent.size() - 2);
+    fileContentTokens.clear();
+    split(arrangementConfig, ',', fileContentTokens);
+
+    vector<int> arrangement;
+    int column;
+    for (const auto &content : fileContentTokens)
+    {
+        int num = stoi(content);
+        arrangement.push_back(num);
+        column += num;
+    }
+
+    fileContent.setArrangement(arrangement);
+    fileContent.setColumn(column);
+}
+
+void updateFlightSeat(Flight &flight, FileContent &fileContent)
+{
+    SeatType seatType = fileContent.getSeatType();
+    if (seatType == ECONOMY)
+    {
+        flight.setEconomy(1000, fileContent.getRow(), fileContent.getColumn(), fileContent.getArrangement());
+    }
+    else if (seatType == BUSINESS)
+    {
+        flight.setBusiness(2000, fileContent.getRow(), fileContent.getColumn(), fileContent.getArrangement());
+    }
+    else
+    {
+        cout << "\nInvalid seat type\n";
     }
 }
 
@@ -52,32 +93,19 @@ bool getSeatNumbers(vector<pair<int, int>> &seatNumbers)
     return true;
 }
 
-pair<int, int> getFileContent(string &line, vector<int> &arrangement)
+void printOptions()
 {
-    vector<string> fileContentTokens;
-    split(line, ' ', fileContentTokens);
-    string type = fileContentTokens[0], arrangementContent = fileContentTokens[1];
-    int row = stoi(fileContentTokens[2]);
-    SeatType seatType;
-    if (type == "Economy")
-    {
-        seatType = ECONOMY;
-    }
-    else
-    {
-        seatType = BUSINESS;
-    }
-    string arrangementConfig = arrangementContent.substr(1, arrangementContent.size() - 2);
-    fileContentTokens.clear();
-    split(arrangementConfig, ',', fileContentTokens);
-    int column;
-    for (const auto &content : fileContentTokens)
-    {
-        int num = stoi(content);
-        arrangement.push_back(num);
-        column += num;
-    }
-    return {row, column};
+    cout << "\nOptions\n";
+    cout << "1 - List flights.\n";
+    cout << "2 - Search flights based on location.\n";
+    cout << "3 - Search flights based on business class.\n";
+    cout << "4 - Print available seats in a flight.\n";
+    cout << "5 - Book seats in a flight.\n";
+    cout << "6 - Print seats with meal order.\n";
+    cout << "7 - Print booking summary.\n";
+    cout << "8 - Cancel seats in a flight.\n";
+    cout << "9 - Exit.\n";
+    cout << "\nChoose an option from above - ";
 }
 
 int main()
@@ -95,17 +123,28 @@ int main()
         split(rawFileName, '-', fileNametokens);
         string id = fileNametokens[1], source = fileNametokens[2], destination = fileNametokens[3];
 
+        // Create flight.
+        Flight flight(id, source, destination);
+
         // Read contents of file.
         ifstream fileDetails;
         fileDetails.open(path + "/" + fileName);
         string line;
+
+        int seatTypeCount = 0;
         while (getline(fileDetails, line))
         {
-            vector<int> economyArrangement, businessArrangement;
-            pair<int, int> economyPair = getFileContent(line, economyArrangement);
-            getline(fileDetails, line);
-            pair<int, int> businessPair = getFileContent(line, businessArrangement);
-            Flight flight(id, source, destination, 1000, economyPair.first, economyPair.second, economyArrangement, 2000, businessPair.first, businessPair.second, businessArrangement);
+            if (line.size() > 0)
+            {
+                FileContent fileContent;
+                getFileContent(line, fileContent);
+                updateFlightSeat(flight, fileContent);
+                seatTypeCount++;
+            }
+        }
+        // Update flights only when they are valid.
+        if (seatTypeCount > 0)
+        {
             flightTicketBooking.getFlights().push_back(flight);
         }
     }
