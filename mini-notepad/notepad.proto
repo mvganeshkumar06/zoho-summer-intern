@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package notepad;
+
+message User {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string location = 4;
+}
+
+message Users { repeated User users = 1; }
+
+message Notepad {
+  string id = 1;
+  string name = 2;
+  string userId = 3;
+  string content = 4;
+}
+
+message Version {
+  string number = 1;
+  string createdTime = 2;
+  string notepadId = 3;
+  string content = 4;
+}
