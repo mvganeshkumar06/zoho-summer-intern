@@ -96,6 +96,14 @@ class UserPortal
     }
 
 public:
+    void printOptions()
+    {
+        cout << "\nOptions\n";
+        cout << "1 - Sign up\n";
+        cout << "2 - Login\n";
+        cout << "3 - Exit\n";
+        cout << "\nChoose an option from above - ";
+    }
     bool signUp(string &name, string &email, string &password, string &location)
     {
         // Get the existing users

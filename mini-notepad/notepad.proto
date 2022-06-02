@@ -11,16 +11,31 @@ message User {
 
 message Users { repeated User users = 1; }
 
+message Content { string line = 1; }
+
 message Notepad {
   string id = 1;
   string name = 2;
-  string userId = 3;
-  string content = 4;
+  string user_name = 3;
+  repeated Content contents = 4;
+}
+
+enum ChangeName {
+  ADD = 0;
+  REMOVE = 1;
+  UPDATE = 2;
+}
+
+message Change {
+  ChangeName name = 1;
+  string startLine = 2;
+  string endLine = 3;
+  repeated Content contents = 4;
 }
 
 message Version {
   string number = 1;
-  string createdTime = 2;
-  string notepadId = 3;
-  string content = 4;
+  string created_time = 2;
+  string notepad_id = 3;
+  repeated Change changes = 4;
 }
