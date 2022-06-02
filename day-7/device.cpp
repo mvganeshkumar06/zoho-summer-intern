@@ -20,7 +20,7 @@ public:
         {
             status = ONLINE;
             cout << "\n"
-                 << name << " is turned ON\n\n";
+                 << name << " is turned ON\n";
         }
     }
     void turnOff()
@@ -29,7 +29,7 @@ public:
         {
             status = OFFLINE;
             cout << "\n"
-                 << name << " is turned OFF\n\n";
+                 << name << " is turned OFF\n";
         }
     }
     void printInfo()

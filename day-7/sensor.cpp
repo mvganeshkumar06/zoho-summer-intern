@@ -16,6 +16,19 @@ public:
     float limit;
     string deviceName;
     string functionName;
+    vector<bool (*)(float, float)> funPtrs = {
+        [](float value, float limit)
+        { return value < limit; },
+        [](float value, float limit)
+        { return value <= limit; },
+        [](float value, float limit)
+        { return value > limit; },
+        [](float value, float limit)
+        { return value >= limit; },
+        [](float value, float limit)
+        { return value == limit; },
+    };
+    bool (*funPtr)(float, float);
     Sensor() {}
     Sensor(string &name) : name(name), batteryLevel(5), status(OFFLINE), value(20.2f) {}
     void setStatus(Status status)
@@ -42,8 +55,14 @@ public:
     {
         if (status == ONLINE)
         {
+            if (comparisonOperator != "<" && comparisonOperator != "<=" && comparisonOperator != ">" && comparisonOperator != ">=" && comparisonOperator != "==")
+            {
+                cout << "\nInvalid comparison operator\n";
+                return;
+            }
             this->comparisonOperator = comparisonOperator;
             this->limit = limit;
+            setFunPtr();
         }
     }
     void setAction(string &deviceName, string &functionName)
@@ -54,30 +73,32 @@ public:
             this->functionName = functionName;
         }
     }
-    bool isConditionSatisfied()
+    void setFunPtr()
     {
         if (comparisonOperator == "<")
         {
-            return value < limit;
+            funPtr = funPtrs[0];
         }
         else if (comparisonOperator == "<=")
         {
-            return value <= limit;
+            funPtr = funPtrs[1];
         }
         else if (comparisonOperator == ">")
         {
-            return value > limit;
+            funPtr = funPtrs[2];
         }
         else if (comparisonOperator == ">=")
         {
-            return value >= limit;
+            funPtr = funPtrs[3];
         }
-        else if (comparisonOperator == "==")
+        else
         {
-            return value == limit;
+            funPtr = funPtrs[4];
         }
-        cout << "\nInvalid comparison operator\n";
-        return false;
+    }
+    bool isConditionSatisfied()
+    {
+        return funPtr(value, limit);
     }
     void onValueChange()
     {
@@ -135,7 +156,7 @@ public:
     }
     void printInfo()
     {
-        cout << "Sensor - " << name << "\n";
+        cout << "\nSensor - " << name << "\n";
         cout << "Value - " << value << "\n";
         cout << "Battery level - " << batteryLevel << "\n\n";
     }
