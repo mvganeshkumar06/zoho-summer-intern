@@ -129,8 +129,20 @@ int main()
                         }
                         break;
                     }
-                    // Logout
+                    // Display version
                     case 7:
+                    {
+                        cout << "\nEnter notepad name - ";
+                        string notepadName;
+                        getline(cin >> ws, notepadName);
+                        if (!notepadPortal.displayVersions(notepadName))
+                        {
+                            cout << "\nUnable to display versions\n";
+                        }
+                        break;
+                    }
+                    // Logout
+                    case 8:
                     {
                         userLoggedIn = false;
                         break;

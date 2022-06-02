@@ -29,6 +29,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h> // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -48,6 +49,9 @@ struct TableStruct_notepad_2eproto
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_notepad_2eproto;
 namespace notepad
 {
+    class Change;
+    struct ChangeDefaultTypeInternal;
+    extern ChangeDefaultTypeInternal _Change_default_instance_;
     class Content;
     struct ContentDefaultTypeInternal;
     extern ContentDefaultTypeInternal _Content_default_instance_;
@@ -63,8 +67,13 @@ namespace notepad
     class Version;
     struct VersionDefaultTypeInternal;
     extern VersionDefaultTypeInternal _Version_default_instance_;
+    class Versions;
+    struct VersionsDefaultTypeInternal;
+    extern VersionsDefaultTypeInternal _Versions_default_instance_;
 } // namespace notepad
 PROTOBUF_NAMESPACE_OPEN
+template <>
+::notepad::Change *Arena::CreateMaybeMessage<::notepad::Change>(Arena *);
 template <>
 ::notepad::Content *Arena::CreateMaybeMessage<::notepad::Content>(Arena *);
 template <>
@@ -75,10 +84,41 @@ template <>
 ::notepad::Users *Arena::CreateMaybeMessage<::notepad::Users>(Arena *);
 template <>
 ::notepad::Version *Arena::CreateMaybeMessage<::notepad::Version>(Arena *);
+template <>
+::notepad::Versions *Arena::CreateMaybeMessage<::notepad::Versions>(Arena *);
 PROTOBUF_NAMESPACE_CLOSE
 namespace notepad
 {
 
+    enum ChangeName : int
+    {
+        ADD = 0,
+        REMOVE = 1,
+        UPDATE = 2,
+        ChangeName_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+        ChangeName_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+    };
+    bool ChangeName_IsValid(int value);
+    constexpr ChangeName ChangeName_MIN = ADD;
+    constexpr ChangeName ChangeName_MAX = UPDATE;
+    constexpr int ChangeName_ARRAYSIZE = ChangeName_MAX + 1;
+
+    const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor *ChangeName_descriptor();
+    template <typename T>
+    inline const std::string &ChangeName_Name(T enum_t_value)
+    {
+        static_assert(::std::is_same<T, ChangeName>::value ||
+                          ::std::is_integral<T>::value,
+                      "Incorrect type passed to function ChangeName_Name.");
+        return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+            ChangeName_descriptor(), enum_t_value);
+    }
+    inline bool ChangeName_Parse(
+        ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ChangeName *value)
+    {
+        return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ChangeName>(
+            ChangeName_descriptor(), name, value);
+    }
     // ===================================================================
 
     class User final : public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:notepad.User) */
@@ -945,6 +985,236 @@ namespace notepad
     };
     // -------------------------------------------------------------------
 
+    class Change final : public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:notepad.Change) */
+    {
+    public:
+        inline Change() : Change(nullptr) {}
+        ~Change() override;
+        explicit PROTOBUF_CONSTEXPR Change(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+        Change(const Change &from);
+        Change(Change &&from) noexcept
+            : Change()
+        {
+            *this = ::std::move(from);
+        }
+
+        inline Change &operator=(const Change &from)
+        {
+            CopyFrom(from);
+            return *this;
+        }
+        inline Change &operator=(Change &&from) noexcept
+        {
+            if (this == &from)
+                return *this;
+            if (GetOwningArena() == from.GetOwningArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+                && GetOwningArena() != nullptr
+#endif // !PROTOBUF_FORCE_COPY_IN_MOVE
+            )
+            {
+                InternalSwap(&from);
+            }
+            else
+            {
+                CopyFrom(from);
+            }
+            return *this;
+        }
+
+        static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
+        {
+            return GetDescriptor();
+        }
+        static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
+        {
+            return default_instance().GetMetadata().descriptor;
+        }
+        static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
+        {
+            return default_instance().GetMetadata().reflection;
+        }
+        static const Change &default_instance()
+        {
+            return *internal_default_instance();
+        }
+        static inline const Change *internal_default_instance()
+        {
+            return reinterpret_cast<const Change *>(
+                &_Change_default_instance_);
+        }
+        static constexpr int kIndexInFileMessages =
+            4;
+
+        friend void swap(Change &a, Change &b)
+        {
+            a.Swap(&b);
+        }
+        inline void Swap(Change *other)
+        {
+            if (other == this)
+                return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+            if (GetOwningArena() != nullptr &&
+                GetOwningArena() == other->GetOwningArena())
+            {
+#else  // PROTOBUF_FORCE_COPY_IN_SWAP
+            if (GetOwningArena() == other->GetOwningArena())
+            {
+#endif // !PROTOBUF_FORCE_COPY_IN_SWAP
+                InternalSwap(other);
+            }
+            else
+            {
+                ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+            }
+        }
+        void UnsafeArenaSwap(Change *other)
+        {
+            if (other == this)
+                return;
+            GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+            InternalSwap(other);
+        }
+
+        // implements Message ----------------------------------------------
+
+        Change *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
+        {
+            return CreateMaybeMessage<Change>(arena);
+        }
+        using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+        void CopyFrom(const Change &from);
+        using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+        void MergeFrom(const Change &from)
+        {
+            Change::MergeImpl(*this, from);
+        }
+
+    private:
+        static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg, const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+
+    public:
+        PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+        bool IsInitialized() const final;
+
+        size_t ByteSizeLong() const final;
+        const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
+        uint8_t *_InternalSerialize(
+            uint8_t *target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
+        int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+    private:
+        void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
+        void SharedDtor();
+        void SetCachedSize(int size) const final;
+        void InternalSwap(Change *other);
+
+    private:
+        friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+        static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
+        {
+            return "notepad.Change";
+        }
+
+    protected:
+        explicit Change(::PROTOBUF_NAMESPACE_ID::Arena *arena,
+                        bool is_message_owned = false);
+
+    public:
+        static const ClassData _class_data_;
+        const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
+
+        ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+        // nested types ----------------------------------------------------
+
+        // accessors -------------------------------------------------------
+
+        enum : int
+        {
+            kContentsFieldNumber = 4,
+            kNameFieldNumber = 1,
+            kStartLineFieldNumber = 2,
+            kEndLineFieldNumber = 3,
+        };
+        // repeated .notepad.Content contents = 4;
+        int contents_size() const;
+
+    private:
+        int _internal_contents_size() const;
+
+    public:
+        void clear_contents();
+        ::notepad::Content *mutable_contents(int index);
+        ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> *
+        mutable_contents();
+
+    private:
+        const ::notepad::Content &_internal_contents(int index) const;
+        ::notepad::Content *_internal_add_contents();
+
+    public:
+        const ::notepad::Content &contents(int index) const;
+        ::notepad::Content *add_contents();
+        const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> &
+        contents() const;
+
+        // .notepad.ChangeName name = 1;
+        void clear_name();
+        ::notepad::ChangeName name() const;
+        void set_name(::notepad::ChangeName value);
+
+    private:
+        ::notepad::ChangeName _internal_name() const;
+        void _internal_set_name(::notepad::ChangeName value);
+
+    public:
+        // int32 start_line = 2;
+        void clear_start_line();
+        int32_t start_line() const;
+        void set_start_line(int32_t value);
+
+    private:
+        int32_t _internal_start_line() const;
+        void _internal_set_start_line(int32_t value);
+
+    public:
+        // int32 end_line = 3;
+        void clear_end_line();
+        int32_t end_line() const;
+        void set_end_line(int32_t value);
+
+    private:
+        int32_t _internal_end_line() const;
+        void _internal_set_end_line(int32_t value);
+
+    public:
+        // @@protoc_insertion_point(class_scope:notepad.Change)
+    private:
+        class _Internal;
+
+        template <typename T>
+        friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+        typedef void InternalArenaConstructable_;
+        typedef void DestructorSkippable_;
+        struct Impl_
+        {
+            ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> contents_;
+            int name_;
+            int32_t start_line_;
+            int32_t end_line_;
+            mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+        };
+        union
+        {
+            Impl_ _impl_;
+        };
+        friend struct ::TableStruct_notepad_2eproto;
+    };
+    // -------------------------------------------------------------------
+
     class Version final : public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:notepad.Version) */
     {
     public:
@@ -1005,7 +1275,7 @@ namespace notepad
                 &_Version_default_instance_);
         }
         static constexpr int kIndexInFileMessages =
-            4;
+            5;
 
         friend void swap(Version &a, Version &b)
         {
@@ -1094,49 +1364,50 @@ namespace notepad
 
         enum : int
         {
-            kContentsFieldNumber = 4,
-            kNumberFieldNumber = 1,
-            kCreatedTimeFieldNumber = 2,
-            kNotepadIdFieldNumber = 3,
+            kChangesFieldNumber = 5,
+            kIdFieldNumber = 1,
+            kCreatedTimeFieldNumber = 3,
+            kNotepadIdFieldNumber = 4,
+            kNumberFieldNumber = 2,
         };
-        // repeated .notepad.Content contents = 4;
-        int contents_size() const;
+        // repeated .notepad.Change changes = 5;
+        int changes_size() const;
 
     private:
-        int _internal_contents_size() const;
+        int _internal_changes_size() const;
 
     public:
-        void clear_contents();
-        ::notepad::Content *mutable_contents(int index);
-        ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> *
-        mutable_contents();
+        void clear_changes();
+        ::notepad::Change *mutable_changes(int index);
+        ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Change> *
+        mutable_changes();
 
     private:
-        const ::notepad::Content &_internal_contents(int index) const;
-        ::notepad::Content *_internal_add_contents();
+        const ::notepad::Change &_internal_changes(int index) const;
+        ::notepad::Change *_internal_add_changes();
 
     public:
-        const ::notepad::Content &contents(int index) const;
-        ::notepad::Content *add_contents();
-        const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> &
-        contents() const;
+        const ::notepad::Change &changes(int index) const;
+        ::notepad::Change *add_changes();
+        const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Change> &
+        changes() const;
 
-        // string number = 1;
-        void clear_number();
-        const std::string &number() const;
+        // string id = 1;
+        void clear_id();
+        const std::string &id() const;
         template <typename ArgT0 = const std::string &, typename... ArgT>
-        void set_number(ArgT0 &&arg0, ArgT... args);
-        std::string *mutable_number();
-        PROTOBUF_NODISCARD std::string *release_number();
-        void set_allocated_number(std::string *number);
+        void set_id(ArgT0 &&arg0, ArgT... args);
+        std::string *mutable_id();
+        PROTOBUF_NODISCARD std::string *release_id();
+        void set_allocated_id(std::string *id);
 
     private:
-        const std::string &_internal_number() const;
-        inline PROTOBUF_ALWAYS_INLINE void _internal_set_number(const std::string &value);
-        std::string *_internal_mutable_number();
+        const std::string &_internal_id() const;
+        inline PROTOBUF_ALWAYS_INLINE void _internal_set_id(const std::string &value);
+        std::string *_internal_mutable_id();
 
     public:
-        // string created_time = 2;
+        // string created_time = 3;
         void clear_created_time();
         const std::string &created_time() const;
         template <typename ArgT0 = const std::string &, typename... ArgT>
@@ -1151,7 +1422,7 @@ namespace notepad
         std::string *_internal_mutable_created_time();
 
     public:
-        // string notepad_id = 3;
+        // string notepad_id = 4;
         void clear_notepad_id();
         const std::string &notepad_id() const;
         template <typename ArgT0 = const std::string &, typename... ArgT>
@@ -1166,6 +1437,16 @@ namespace notepad
         std::string *_internal_mutable_notepad_id();
 
     public:
+        // int32 number = 2;
+        void clear_number();
+        int32_t number() const;
+        void set_number(int32_t value);
+
+    private:
+        int32_t _internal_number() const;
+        void _internal_set_number(int32_t value);
+
+    public:
         // @@protoc_insertion_point(class_scope:notepad.Version)
     private:
         class _Internal;
@@ -1176,10 +1457,205 @@ namespace notepad
         typedef void DestructorSkippable_;
         struct Impl_
         {
-            ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> contents_;
-            ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr number_;
+            ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Change> changes_;
+            ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
             ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr created_time_;
             ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr notepad_id_;
+            int32_t number_;
+            mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+        };
+        union
+        {
+            Impl_ _impl_;
+        };
+        friend struct ::TableStruct_notepad_2eproto;
+    };
+    // -------------------------------------------------------------------
+
+    class Versions final : public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:notepad.Versions) */
+    {
+    public:
+        inline Versions() : Versions(nullptr) {}
+        ~Versions() override;
+        explicit PROTOBUF_CONSTEXPR Versions(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+        Versions(const Versions &from);
+        Versions(Versions &&from) noexcept
+            : Versions()
+        {
+            *this = ::std::move(from);
+        }
+
+        inline Versions &operator=(const Versions &from)
+        {
+            CopyFrom(from);
+            return *this;
+        }
+        inline Versions &operator=(Versions &&from) noexcept
+        {
+            if (this == &from)
+                return *this;
+            if (GetOwningArena() == from.GetOwningArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+                && GetOwningArena() != nullptr
+#endif // !PROTOBUF_FORCE_COPY_IN_MOVE
+            )
+            {
+                InternalSwap(&from);
+            }
+            else
+            {
+                CopyFrom(from);
+            }
+            return *this;
+        }
+
+        static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
+        {
+            return GetDescriptor();
+        }
+        static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
+        {
+            return default_instance().GetMetadata().descriptor;
+        }
+        static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
+        {
+            return default_instance().GetMetadata().reflection;
+        }
+        static const Versions &default_instance()
+        {
+            return *internal_default_instance();
+        }
+        static inline const Versions *internal_default_instance()
+        {
+            return reinterpret_cast<const Versions *>(
+                &_Versions_default_instance_);
+        }
+        static constexpr int kIndexInFileMessages =
+            6;
+
+        friend void swap(Versions &a, Versions &b)
+        {
+            a.Swap(&b);
+        }
+        inline void Swap(Versions *other)
+        {
+            if (other == this)
+                return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+            if (GetOwningArena() != nullptr &&
+                GetOwningArena() == other->GetOwningArena())
+            {
+#else  // PROTOBUF_FORCE_COPY_IN_SWAP
+            if (GetOwningArena() == other->GetOwningArena())
+            {
+#endif // !PROTOBUF_FORCE_COPY_IN_SWAP
+                InternalSwap(other);
+            }
+            else
+            {
+                ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+            }
+        }
+        void UnsafeArenaSwap(Versions *other)
+        {
+            if (other == this)
+                return;
+            GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+            InternalSwap(other);
+        }
+
+        // implements Message ----------------------------------------------
+
+        Versions *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
+        {
+            return CreateMaybeMessage<Versions>(arena);
+        }
+        using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+        void CopyFrom(const Versions &from);
+        using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+        void MergeFrom(const Versions &from)
+        {
+            Versions::MergeImpl(*this, from);
+        }
+
+    private:
+        static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg, const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+
+    public:
+        PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+        bool IsInitialized() const final;
+
+        size_t ByteSizeLong() const final;
+        const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
+        uint8_t *_InternalSerialize(
+            uint8_t *target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
+        int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+    private:
+        void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
+        void SharedDtor();
+        void SetCachedSize(int size) const final;
+        void InternalSwap(Versions *other);
+
+    private:
+        friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+        static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
+        {
+            return "notepad.Versions";
+        }
+
+    protected:
+        explicit Versions(::PROTOBUF_NAMESPACE_ID::Arena *arena,
+                          bool is_message_owned = false);
+
+    public:
+        static const ClassData _class_data_;
+        const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
+
+        ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+        // nested types ----------------------------------------------------
+
+        // accessors -------------------------------------------------------
+
+        enum : int
+        {
+            kVersionsFieldNumber = 1,
+        };
+        // repeated .notepad.Version versions = 1;
+        int versions_size() const;
+
+    private:
+        int _internal_versions_size() const;
+
+    public:
+        void clear_versions();
+        ::notepad::Version *mutable_versions(int index);
+        ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Version> *
+        mutable_versions();
+
+    private:
+        const ::notepad::Version &_internal_versions(int index) const;
+        ::notepad::Version *_internal_add_versions();
+
+    public:
+        const ::notepad::Version &versions(int index) const;
+        ::notepad::Version *add_versions();
+        const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Version> &
+        versions() const;
+
+        // @@protoc_insertion_point(class_scope:notepad.Versions)
+    private:
+        class _Internal;
+
+        template <typename T>
+        friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+        typedef void InternalArenaConstructable_;
+        typedef void DestructorSkippable_;
+        struct Impl_
+        {
+            ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Version> versions_;
             mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
         };
         union
@@ -1254,8 +1730,8 @@ namespace notepad
         {
             _impl_.name_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.User.name)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.User.name)
     }
 
     // string email = 2;
@@ -1314,8 +1790,8 @@ namespace notepad
         {
             _impl_.email_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.User.email)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.User.email)
     }
 
     // string password = 3;
@@ -1374,8 +1850,8 @@ namespace notepad
         {
             _impl_.password_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.User.password)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.User.password)
     }
 
     // string location = 4;
@@ -1434,8 +1910,8 @@ namespace notepad
         {
             _impl_.location_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.User.location)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.User.location)
     }
 
     // -------------------------------------------------------------------
@@ -1552,8 +2028,8 @@ namespace notepad
         {
             _impl_.line_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.Content.line)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.Content.line)
     }
 
     // -------------------------------------------------------------------
@@ -1616,8 +2092,8 @@ namespace notepad
         {
             _impl_.id_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.id)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.id)
     }
 
     // string name = 2;
@@ -1676,8 +2152,8 @@ namespace notepad
         {
             _impl_.name_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.name)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.name)
     }
 
     // string user_name = 3;
@@ -1736,8 +2212,8 @@ namespace notepad
         {
             _impl_.user_name_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.user_name)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.user_name)
     }
 
     // repeated .notepad.Content contents = 4;
@@ -1792,69 +2268,223 @@ namespace notepad
 
     // -------------------------------------------------------------------
 
+    // Change
+
+    // .notepad.ChangeName name = 1;
+    inline void Change::clear_name()
+    {
+        _impl_.name_ = 0;
+    }
+    inline ::notepad::ChangeName Change::_internal_name() const
+    {
+        return static_cast<::notepad::ChangeName>(_impl_.name_);
+    }
+    inline ::notepad::ChangeName Change::name() const
+    {
+        // @@protoc_insertion_point(field_get:notepad.Change.name)
+        return _internal_name();
+    }
+    inline void Change::_internal_set_name(::notepad::ChangeName value)
+    {
+
+        _impl_.name_ = value;
+    }
+    inline void Change::set_name(::notepad::ChangeName value)
+    {
+        _internal_set_name(value);
+        // @@protoc_insertion_point(field_set:notepad.Change.name)
+    }
+
+    // int32 start_line = 2;
+    inline void Change::clear_start_line()
+    {
+        _impl_.start_line_ = 0;
+    }
+    inline int32_t Change::_internal_start_line() const
+    {
+        return _impl_.start_line_;
+    }
+    inline int32_t Change::start_line() const
+    {
+        // @@protoc_insertion_point(field_get:notepad.Change.start_line)
+        return _internal_start_line();
+    }
+    inline void Change::_internal_set_start_line(int32_t value)
+    {
+
+        _impl_.start_line_ = value;
+    }
+    inline void Change::set_start_line(int32_t value)
+    {
+        _internal_set_start_line(value);
+        // @@protoc_insertion_point(field_set:notepad.Change.start_line)
+    }
+
+    // int32 end_line = 3;
+    inline void Change::clear_end_line()
+    {
+        _impl_.end_line_ = 0;
+    }
+    inline int32_t Change::_internal_end_line() const
+    {
+        return _impl_.end_line_;
+    }
+    inline int32_t Change::end_line() const
+    {
+        // @@protoc_insertion_point(field_get:notepad.Change.end_line)
+        return _internal_end_line();
+    }
+    inline void Change::_internal_set_end_line(int32_t value)
+    {
+
+        _impl_.end_line_ = value;
+    }
+    inline void Change::set_end_line(int32_t value)
+    {
+        _internal_set_end_line(value);
+        // @@protoc_insertion_point(field_set:notepad.Change.end_line)
+    }
+
+    // repeated .notepad.Content contents = 4;
+    inline int Change::_internal_contents_size() const
+    {
+        return _impl_.contents_.size();
+    }
+    inline int Change::contents_size() const
+    {
+        return _internal_contents_size();
+    }
+    inline void Change::clear_contents()
+    {
+        _impl_.contents_.Clear();
+    }
+    inline ::notepad::Content *Change::mutable_contents(int index)
+    {
+        // @@protoc_insertion_point(field_mutable:notepad.Change.contents)
+        return _impl_.contents_.Mutable(index);
+    }
+    inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> *
+    Change::mutable_contents()
+    {
+        // @@protoc_insertion_point(field_mutable_list:notepad.Change.contents)
+        return &_impl_.contents_;
+    }
+    inline const ::notepad::Content &Change::_internal_contents(int index) const
+    {
+        return _impl_.contents_.Get(index);
+    }
+    inline const ::notepad::Content &Change::contents(int index) const
+    {
+        // @@protoc_insertion_point(field_get:notepad.Change.contents)
+        return _internal_contents(index);
+    }
+    inline ::notepad::Content *Change::_internal_add_contents()
+    {
+        return _impl_.contents_.Add();
+    }
+    inline ::notepad::Content *Change::add_contents()
+    {
+        ::notepad::Content *_add = _internal_add_contents();
+        // @@protoc_insertion_point(field_add:notepad.Change.contents)
+        return _add;
+    }
+    inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> &
+    Change::contents() const
+    {
+        // @@protoc_insertion_point(field_list:notepad.Change.contents)
+        return _impl_.contents_;
+    }
+
+    // -------------------------------------------------------------------
+
     // Version
 
-    // string number = 1;
-    inline void Version::clear_number()
+    // string id = 1;
+    inline void Version::clear_id()
     {
-        _impl_.number_.ClearToEmpty();
+        _impl_.id_.ClearToEmpty();
     }
-    inline const std::string &Version::number() const
+    inline const std::string &Version::id() const
     {
-        // @@protoc_insertion_point(field_get:notepad.Version.number)
-        return _internal_number();
+        // @@protoc_insertion_point(field_get:notepad.Version.id)
+        return _internal_id();
     }
     template <typename ArgT0, typename... ArgT>
-    inline PROTOBUF_ALWAYS_INLINE void Version::set_number(ArgT0 &&arg0, ArgT... args)
+    inline PROTOBUF_ALWAYS_INLINE void Version::set_id(ArgT0 &&arg0, ArgT... args)
     {
 
-        _impl_.number_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-        // @@protoc_insertion_point(field_set:notepad.Version.number)
+        _impl_.id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+        // @@protoc_insertion_point(field_set:notepad.Version.id)
     }
-    inline std::string *Version::mutable_number()
+    inline std::string *Version::mutable_id()
     {
-        std::string *_s = _internal_mutable_number();
-        // @@protoc_insertion_point(field_mutable:notepad.Version.number)
+        std::string *_s = _internal_mutable_id();
+        // @@protoc_insertion_point(field_mutable:notepad.Version.id)
         return _s;
     }
-    inline const std::string &Version::_internal_number() const
+    inline const std::string &Version::_internal_id() const
     {
-        return _impl_.number_.Get();
+        return _impl_.id_.Get();
     }
-    inline void Version::_internal_set_number(const std::string &value)
+    inline void Version::_internal_set_id(const std::string &value)
     {
 
-        _impl_.number_.Set(value, GetArenaForAllocation());
+        _impl_.id_.Set(value, GetArenaForAllocation());
     }
-    inline std::string *Version::_internal_mutable_number()
+    inline std::string *Version::_internal_mutable_id()
     {
 
-        return _impl_.number_.Mutable(GetArenaForAllocation());
+        return _impl_.id_.Mutable(GetArenaForAllocation());
     }
-    inline std::string *Version::release_number()
+    inline std::string *Version::release_id()
     {
-        // @@protoc_insertion_point(field_release:notepad.Version.number)
-        return _impl_.number_.Release();
+        // @@protoc_insertion_point(field_release:notepad.Version.id)
+        return _impl_.id_.Release();
     }
-    inline void Version::set_allocated_number(std::string *number)
+    inline void Version::set_allocated_id(std::string *id)
     {
-        if (number != nullptr)
+        if (id != nullptr)
         {
         }
         else
         {
         }
-        _impl_.number_.SetAllocated(number, GetArenaForAllocation());
+        _impl_.id_.SetAllocated(id, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        if (_impl_.number_.IsDefault())
+        if (_impl_.id_.IsDefault())
         {
-            _impl_.number_.Set("", GetArenaForAllocation());
+            _impl_.id_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.Version.number)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.Version.id)
     }
 
-    // string created_time = 2;
+    // int32 number = 2;
+    inline void Version::clear_number()
+    {
+        _impl_.number_ = 0;
+    }
+    inline int32_t Version::_internal_number() const
+    {
+        return _impl_.number_;
+    }
+    inline int32_t Version::number() const
+    {
+        // @@protoc_insertion_point(field_get:notepad.Version.number)
+        return _internal_number();
+    }
+    inline void Version::_internal_set_number(int32_t value)
+    {
+
+        _impl_.number_ = value;
+    }
+    inline void Version::set_number(int32_t value)
+    {
+        _internal_set_number(value);
+        // @@protoc_insertion_point(field_set:notepad.Version.number)
+    }
+
+    // string created_time = 3;
     inline void Version::clear_created_time()
     {
         _impl_.created_time_.ClearToEmpty();
@@ -1910,11 +2540,11 @@ namespace notepad
         {
             _impl_.created_time_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.Version.created_time)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.Version.created_time)
     }
 
-    // string notepad_id = 3;
+    // string notepad_id = 4;
     inline void Version::clear_notepad_id()
     {
         _impl_.notepad_id_.ClearToEmpty();
@@ -1970,58 +2600,112 @@ namespace notepad
         {
             _impl_.notepad_id_.Set("", GetArenaForAllocation());
         }
-#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        // @@protoc_insertion_point(field_set_allocated:notepad.Version.notepad_id)
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+       // @@protoc_insertion_point(field_set_allocated:notepad.Version.notepad_id)
     }
 
-    // repeated .notepad.Content contents = 4;
-    inline int Version::_internal_contents_size() const
+    // repeated .notepad.Change changes = 5;
+    inline int Version::_internal_changes_size() const
     {
-        return _impl_.contents_.size();
+        return _impl_.changes_.size();
     }
-    inline int Version::contents_size() const
+    inline int Version::changes_size() const
     {
-        return _internal_contents_size();
+        return _internal_changes_size();
     }
-    inline void Version::clear_contents()
+    inline void Version::clear_changes()
     {
-        _impl_.contents_.Clear();
+        _impl_.changes_.Clear();
     }
-    inline ::notepad::Content *Version::mutable_contents(int index)
+    inline ::notepad::Change *Version::mutable_changes(int index)
     {
-        // @@protoc_insertion_point(field_mutable:notepad.Version.contents)
-        return _impl_.contents_.Mutable(index);
+        // @@protoc_insertion_point(field_mutable:notepad.Version.changes)
+        return _impl_.changes_.Mutable(index);
     }
-    inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> *
-    Version::mutable_contents()
+    inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Change> *
+    Version::mutable_changes()
     {
-        // @@protoc_insertion_point(field_mutable_list:notepad.Version.contents)
-        return &_impl_.contents_;
+        // @@protoc_insertion_point(field_mutable_list:notepad.Version.changes)
+        return &_impl_.changes_;
     }
-    inline const ::notepad::Content &Version::_internal_contents(int index) const
+    inline const ::notepad::Change &Version::_internal_changes(int index) const
     {
-        return _impl_.contents_.Get(index);
+        return _impl_.changes_.Get(index);
     }
-    inline const ::notepad::Content &Version::contents(int index) const
+    inline const ::notepad::Change &Version::changes(int index) const
     {
-        // @@protoc_insertion_point(field_get:notepad.Version.contents)
-        return _internal_contents(index);
+        // @@protoc_insertion_point(field_get:notepad.Version.changes)
+        return _internal_changes(index);
     }
-    inline ::notepad::Content *Version::_internal_add_contents()
+    inline ::notepad::Change *Version::_internal_add_changes()
     {
-        return _impl_.contents_.Add();
+        return _impl_.changes_.Add();
     }
-    inline ::notepad::Content *Version::add_contents()
+    inline ::notepad::Change *Version::add_changes()
     {
-        ::notepad::Content *_add = _internal_add_contents();
-        // @@protoc_insertion_point(field_add:notepad.Version.contents)
+        ::notepad::Change *_add = _internal_add_changes();
+        // @@protoc_insertion_point(field_add:notepad.Version.changes)
         return _add;
     }
-    inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Content> &
-    Version::contents() const
+    inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Change> &
+    Version::changes() const
     {
-        // @@protoc_insertion_point(field_list:notepad.Version.contents)
-        return _impl_.contents_;
+        // @@protoc_insertion_point(field_list:notepad.Version.changes)
+        return _impl_.changes_;
+    }
+
+    // -------------------------------------------------------------------
+
+    // Versions
+
+    // repeated .notepad.Version versions = 1;
+    inline int Versions::_internal_versions_size() const
+    {
+        return _impl_.versions_.size();
+    }
+    inline int Versions::versions_size() const
+    {
+        return _internal_versions_size();
+    }
+    inline void Versions::clear_versions()
+    {
+        _impl_.versions_.Clear();
+    }
+    inline ::notepad::Version *Versions::mutable_versions(int index)
+    {
+        // @@protoc_insertion_point(field_mutable:notepad.Versions.versions)
+        return _impl_.versions_.Mutable(index);
+    }
+    inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Version> *
+    Versions::mutable_versions()
+    {
+        // @@protoc_insertion_point(field_mutable_list:notepad.Versions.versions)
+        return &_impl_.versions_;
+    }
+    inline const ::notepad::Version &Versions::_internal_versions(int index) const
+    {
+        return _impl_.versions_.Get(index);
+    }
+    inline const ::notepad::Version &Versions::versions(int index) const
+    {
+        // @@protoc_insertion_point(field_get:notepad.Versions.versions)
+        return _internal_versions(index);
+    }
+    inline ::notepad::Version *Versions::_internal_add_versions()
+    {
+        return _impl_.versions_.Add();
+    }
+    inline ::notepad::Version *Versions::add_versions()
+    {
+        ::notepad::Version *_add = _internal_add_versions();
+        // @@protoc_insertion_point(field_add:notepad.Versions.versions)
+        return _add;
+    }
+    inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::notepad::Version> &
+    Versions::versions() const
+    {
+        // @@protoc_insertion_point(field_list:notepad.Versions.versions)
+        return _impl_.versions_;
     }
 
 #ifdef __GNUC__
@@ -2035,9 +2719,27 @@ namespace notepad
 
     // -------------------------------------------------------------------
 
+    // -------------------------------------------------------------------
+
+    // -------------------------------------------------------------------
+
     // @@protoc_insertion_point(namespace_scope)
 
 } // namespace notepad
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <>
+struct is_proto_enum<::notepad::ChangeName> : ::std::true_type
+{
+};
+template <>
+inline const EnumDescriptor *GetEnumDescriptor<::notepad::ChangeName>()
+{
+    return ::notepad::ChangeName_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

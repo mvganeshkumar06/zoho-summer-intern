@@ -28,14 +28,17 @@ enum ChangeName {
 
 message Change {
   ChangeName name = 1;
-  string startLine = 2;
-  string endLine = 3;
+  int32 start_line = 2;
+  int32 end_line = 3;
   repeated Content contents = 4;
 }
 
 message Version {
-  string number = 1;
-  string created_time = 2;
-  string notepad_id = 3;
-  repeated Change changes = 4;
+  string id = 1;
+  int32 number = 2;
+  string created_time = 3;
+  string notepad_id = 4;
+  repeated Change changes = 5;
 }
+
+message Versions { repeated Version versions = 1; }
