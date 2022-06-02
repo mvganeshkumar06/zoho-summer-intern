@@ -2,6 +2,9 @@
 #include "device.cpp"
 using namespace std;
 
+string devices[3] = {"fan", "light", "door"};
+Device fan = Device(devices[0]), light = Device(devices[1]), door = Device(devices[2]);
+
 class Sensor
 {
 public:
@@ -13,15 +16,8 @@ public:
     float limit;
     string deviceName;
     string functionName;
-    string devices[3] = {"Fan", "Light", "Door"};
-    Device fan, light, door;
-    Sensor()
-    {
-        this->fan = Device(devices[0]);
-        this->light = Device(devices[1]);
-        this->door = Device(devices[2]);
-    }
-    Sensor(string &name) : name(name), batteryLevel(3), status(OFFLINE), value(20.2f) {}
+    Sensor() {}
+    Sensor(string &name) : name(name), batteryLevel(5), status(OFFLINE), value(20.2f) {}
     void setStatus(Status status)
     {
         this->status = status;
@@ -89,7 +85,7 @@ public:
         {
             if (isConditionSatisfied())
             {
-                if (deviceName == "Fan")
+                if (deviceName == "fan")
                 {
                     if (functionName == "turnOn")
                     {
@@ -104,7 +100,7 @@ public:
                         cout << "\nInvalid function name\n";
                     }
                 }
-                else if (deviceName == "Light")
+                else if (deviceName == "light")
                 {
                     if (functionName == "turnOn")
                     {
@@ -119,7 +115,7 @@ public:
                         cout << "\nInvalid function name\n";
                     }
                 }
-                else if (deviceName == "Door")
+                else if (deviceName == "door")
                 {
                     if (functionName == "turnOn")
                     {
@@ -136,5 +132,11 @@ public:
                 }
             }
         }
+    }
+    void printInfo()
+    {
+        cout << "Sensor - " << name << "\n";
+        cout << "Value - " << value << "\n";
+        cout << "Battery level - " << batteryLevel << "\n\n";
     }
 };

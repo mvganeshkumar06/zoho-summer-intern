@@ -5,8 +5,7 @@ using namespace std;
 class Client
 {
 public:
-    string devices[3] = {"Fan", "Light", "Door"};
-    string sensors[4] = {"Temperature", "Motion", "Water Level", "Gas Level"};
+    string sensors[4] = {"temperature", "motion", "waterLevel", "gasLevel"};
     Sensor temperature, motion, waterLevel, gasLevel;
     Client()
     {
@@ -75,19 +74,19 @@ public:
             string sensorName = tokens1[1], comparisonOperator = tokens1[2], value = tokens1[3], deviceName = tokens2[1], functionName = tokens2[2];
             if (isSensorFound(sensorName))
             {
-                if (sensorName == "Temperature")
+                if (sensorName == "temperature")
                 {
                     temperature.setCondition(comparisonOperator, stof(value));
                 }
-                else if (sensorName == "Motion")
+                else if (sensorName == "motion")
                 {
                     motion.setCondition(comparisonOperator, stof(value));
                 }
-                else if (sensorName == "Water Level")
+                else if (sensorName == "waterLevel")
                 {
                     waterLevel.setCondition(comparisonOperator, stof(value));
                 }
-                else if (sensorName == "Gas Level")
+                else if (sensorName == "gasLevel")
                 {
                     gasLevel.setCondition(comparisonOperator, stof(value));
                 }
@@ -99,19 +98,19 @@ public:
             }
             if (isDeviceFound(deviceName))
             {
-                if (sensorName == "Temperature")
+                if (sensorName == "temperature")
                 {
                     temperature.setAction(deviceName, functionName);
                 }
-                else if (sensorName == "Motion")
+                else if (sensorName == "motion")
                 {
                     motion.setAction(deviceName, functionName);
                 }
-                else if (sensorName == "Water Level")
+                else if (sensorName == "waterLevel")
                 {
                     waterLevel.setAction(deviceName, functionName);
                 }
-                else if (sensorName == "Gas Level")
+                else if (sensorName == "gasLevel")
                 {
                     gasLevel.setAction(deviceName, functionName);
                 }
@@ -129,12 +128,20 @@ public:
             sensor.setValue(sensor.value + 1);
             sensor.onValueChange();
             sensor.setBatteryLevel(sensor.batteryLevel - 1);
+            sensor.printInfo();
+            fan.printInfo();
+            light.printInfo();
+            door.printInfo();
         }
         else if (option == 'd')
         {
             sensor.setValue(sensor.value - 1);
             sensor.onValueChange();
             sensor.setBatteryLevel(sensor.batteryLevel - 1);
+            sensor.printInfo();
+            fan.printInfo();
+            light.printInfo();
+            door.printInfo();
         }
         else
         {

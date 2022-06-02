@@ -20,7 +20,7 @@ public:
         {
             status = ONLINE;
             cout << "\n"
-                 << name << " is turned ON.\n";
+                 << name << " is turned ON\n\n";
         }
     }
     void turnOff()
@@ -29,7 +29,12 @@ public:
         {
             status = OFFLINE;
             cout << "\n"
-                 << name << " is turned OFF.\n";
+                 << name << " is turned OFF\n\n";
         }
+    }
+    void printInfo()
+    {
+        cout << "Device - " << name << "\n";
+        cout << "Status - " << (status == 0 ? "ONLINE" : "OFFLINE") << "\n\n";
     }
 };
