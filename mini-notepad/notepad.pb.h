@@ -1730,8 +1730,8 @@ namespace notepad
         {
             _impl_.name_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.User.name)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.User.name)
     }
 
     // string email = 2;
@@ -1790,8 +1790,8 @@ namespace notepad
         {
             _impl_.email_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.User.email)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.User.email)
     }
 
     // string password = 3;
@@ -1850,8 +1850,8 @@ namespace notepad
         {
             _impl_.password_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.User.password)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.User.password)
     }
 
     // string location = 4;
@@ -1910,8 +1910,8 @@ namespace notepad
         {
             _impl_.location_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.User.location)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.User.location)
     }
 
     // -------------------------------------------------------------------
@@ -2028,8 +2028,8 @@ namespace notepad
         {
             _impl_.line_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.Content.line)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.Content.line)
     }
 
     // -------------------------------------------------------------------
@@ -2092,8 +2092,8 @@ namespace notepad
         {
             _impl_.id_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.id)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.id)
     }
 
     // string name = 2;
@@ -2152,8 +2152,8 @@ namespace notepad
         {
             _impl_.name_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.name)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.name)
     }
 
     // string user_name = 3;
@@ -2212,8 +2212,8 @@ namespace notepad
         {
             _impl_.user_name_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.user_name)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.Notepad.user_name)
     }
 
     // repeated .notepad.Content contents = 4;
@@ -2455,8 +2455,8 @@ namespace notepad
         {
             _impl_.id_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.Version.id)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.Version.id)
     }
 
     // int32 number = 2;
@@ -2540,8 +2540,8 @@ namespace notepad
         {
             _impl_.created_time_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.Version.created_time)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.Version.created_time)
     }
 
     // string notepad_id = 4;
@@ -2600,8 +2600,8 @@ namespace notepad
         {
             _impl_.notepad_id_.Set("", GetArenaForAllocation());
         }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-       // @@protoc_insertion_point(field_set_allocated:notepad.Version.notepad_id)
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        // @@protoc_insertion_point(field_set_allocated:notepad.Version.notepad_id)
     }
 
     // repeated .notepad.Change changes = 5;

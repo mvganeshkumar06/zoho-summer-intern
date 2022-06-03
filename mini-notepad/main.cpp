@@ -141,8 +141,23 @@ int main()
                         }
                         break;
                     }
-                    // Logout
+                    // Revert version
                     case 8:
+                    {
+                        cout << "\nEnter notepad name - ";
+                        string notepadName;
+                        getline(cin >> ws, notepadName);
+                        cout << "\nEnter version number to revert to - ";
+                        int versionNumber;
+                        cin >> versionNumber;
+                        if (!notepadPortal.revertVersion(notepadName, versionNumber))
+                        {
+                            cout << "\nUnable to revert version\n";
+                        }
+                        break;
+                    }
+                    // Logout
+                    case 9:
                     {
                         userLoggedIn = false;
                         break;

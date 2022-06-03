@@ -131,7 +131,9 @@ class NotepadPortal
         // Update version
         version->set_id(id);
         version->set_number(number);
-        // version->set_created_time(); // TODO
+        time_t currTime = time(NULL);
+        string createdTime = string(ctime(&currTime));
+        version->set_created_time(createdTime);
         version->set_notepad_id(notepadId);
     }
     bool addContentAndUpdateVersion(notepad::Notepad &notepad, notepad::Versions &versions, notepad::Version *version)
@@ -157,8 +159,8 @@ class NotepadPortal
             content->set_line(line);
 
             // Update change contents
-            notepad::Content *changeContents = change->add_contents();
-            changeContents->set_line(line);
+            notepad::Content *changeContent = change->add_contents();
+            changeContent->set_line(line);
         }
 
         // End line for the change (0 based indexing)
@@ -220,24 +222,24 @@ class NotepadPortal
     {
         // Create change to add to version
         notepad::Change *change = version->add_changes();
-        notepad::Content *changeContents = change->add_contents();
 
         // Copy the notepad content from start to end line before removing
         for (int i = startLine; i <= endLine; i++)
         {
             notepad::Content content = notepad.contents(i);
-            changeContents->set_line(content.line());
+            notepad::Content *changeContent = change->add_contents();
+            changeContent->set_line(content.line());
         }
 
         // Remove notepad content from start to end line
-        google::protobuf::RepeatedPtrField<notepad::Content> *rpf = notepad.mutable_contents();
+        google::protobuf::RepeatedPtrField<notepad::Content> *contentRpf = notepad.mutable_contents();
         if (startLine == endLine)
         {
-            rpf->DeleteSubrange(startLine, 1);
+            contentRpf->DeleteSubrange(startLine, 1);
         }
         else
         {
-            rpf->DeleteSubrange(startLine, endLine - startLine + 1);
+            contentRpf->DeleteSubrange(startLine, endLine - startLine + 1);
         }
 
         // Update change
@@ -296,13 +298,13 @@ class NotepadPortal
     {
         // Create change to add to version
         notepad::Change *change = version->add_changes();
-        notepad::Content *changeContents = change->add_contents();
 
         // Copy the notepad content from start to end line before updating
         for (int i = startLine; i <= endLine; i++)
         {
             notepad::Content content = notepad.contents(i);
-            changeContents->set_line(content.line());
+            notepad::Content *changeContent = change->add_contents();
+            changeContent->set_line(content.line());
         }
 
         // Update notepad content from start to end line
@@ -333,7 +335,6 @@ class NotepadPortal
     }
     bool updateNotepadContentHelper(notepad::Notepad &notepad, int startLine, int endLine)
     {
-
         string notepadId = notepad.id(), notepadName = notepad.name();
 
         // Create versions
@@ -381,6 +382,97 @@ class NotepadPortal
         }
         return "UPDATE";
     }
+    void revertAdd(notepad::Notepad &notepad, int startLine, int endLine)
+    {
+        // Remove notepad content from start to end line
+        google::protobuf::RepeatedPtrField<notepad::Content> *contentRpf = notepad.mutable_contents();
+        if (startLine == endLine)
+        {
+            contentRpf->DeleteSubrange(startLine, 1);
+        }
+        else
+        {
+            contentRpf->DeleteSubrange(startLine, endLine - startLine + 1);
+        }
+    }
+    void revertRemove(notepad::Notepad &notepad, notepad::Change &change)
+    {
+        int startLine = change.start_line();
+
+        // Create dummy change to hold notepad contents from start line
+        notepad::Change dummyChange;
+
+        // Copy the notepad content from start line before reverting remove
+        for (int i = startLine; i < notepad.contents_size(); i++)
+        {
+            notepad::Content content = notepad.contents(i);
+            notepad::Content *dummyChangeContent = dummyChange.add_contents();
+            dummyChangeContent->set_line(content.line());
+        }
+
+        int notepadEndLine = notepad.contents_size() - 1;
+
+        // Remove notepad content from start line
+        google::protobuf::RepeatedPtrField<notepad::Content> *contentRpf = notepad.mutable_contents();
+        if (startLine == notepadEndLine)
+        {
+            contentRpf->DeleteSubrange(startLine, 1);
+        }
+        else
+        {
+            contentRpf->DeleteSubrange(startLine, notepadEndLine - startLine + 1);
+        }
+
+        // Add change contents to notepad
+        for (int i = 0; i < change.contents_size(); i++)
+        {
+            notepad::Content changeContent = change.contents(i);
+            notepad::Content *content = notepad.add_contents();
+            content->set_line(changeContent.line());
+        }
+
+        // Add remaining notepad content
+        for (int i = 0; i < dummyChange.contents_size(); i++)
+        {
+            notepad::Content dummyChangeContent = dummyChange.contents(i);
+            notepad::Content *content = notepad.add_contents();
+            content->set_line(dummyChangeContent.line());
+        }
+    }
+    void revertUpdate(notepad::Notepad &notepad, notepad::Change &change)
+    {
+        int startLine = change.start_line(), endLine = change.end_line();
+
+        // Update notepad content from start to end line
+        int currLine = startLine;
+        for (int i = 0; i < change.contents_size(); i++)
+        {
+            notepad::Content changeContent = change.contents(i);
+            notepad::Content *content = notepad.mutable_contents(currLine);
+            content->set_line(changeContent.line());
+            currLine++;
+        }
+    }
+    void revertChange(notepad::Notepad &notepad, notepad::Change &change)
+    {
+        // Revert add
+        if (change.name() == notepad::ChangeName::ADD)
+        {
+            revertAdd(notepad, change.start_line(), change.end_line());
+        }
+
+        // Revert remove
+        else if (change.name() == notepad::ChangeName::REMOVE)
+        {
+            revertRemove(notepad, change);
+        }
+
+        // Revert update
+        else
+        {
+            revertUpdate(notepad, change);
+        }
+    }
 
 public:
     NotepadPortal(string &name)
@@ -399,7 +491,8 @@ public:
         cout << "5 - Update notepad content\n";
         cout << "6 - Display notepad\n";
         cout << "7 - Display versions\n";
-        cout << "8 - Logout\n";
+        cout << "8 - Revert version\n";
+        cout << "9 - Logout\n";
         cout << "\nChoose an option from above - ";
     }
     void listNotepads()
@@ -634,6 +727,7 @@ public:
         {
             notepad::Version version = versions.versions(i);
             cout << "\nVersion number - " << version.number() << "\n";
+            cout << "\nCreated time - " << version.created_time() << "\n";
             cout << "Notepad id - " << version.notepad_id() << "\n";
             cout << "\nChanges\n";
             for (int j = 0; j < version.changes_size(); j++)
@@ -649,6 +743,81 @@ public:
                 }
             }
         }
+        return true;
+    }
+    bool revertVersion(string &name, int versionNumber)
+    {
+        // Check if notepad exist
+        if (!notepadExist(name))
+        {
+            cout << "\nNotepad does not exist with the given name\n";
+            return false;
+        }
+
+        // Parse the notepad from the file
+        notepad::Notepad notepad;
+        if (!parseAndReadNotepad(name, notepad))
+        {
+            return false;
+        }
+
+        // Check if version exist
+        if (!versionExist(name))
+        {
+            cout << "\nVersion does not exist with the given name\n";
+            return false;
+        }
+
+        // Create versions
+        notepad::Versions versions;
+
+        // Parse versions and read from the file
+        if (!parseAndReadVersions(name, versions))
+        {
+            return false;
+        }
+
+        // Check if valid version number (0 based indexing)
+        int n = versions.versions_size();
+        versionNumber -= 1;
+        if (versionNumber < 0 || versionNumber >= n - 1)
+        {
+            cout << "\nInvalid version number\n";
+            return false;
+        }
+
+        // Get version repeated ptr field
+        google::protobuf::RepeatedPtrField<notepad::Version> *versionRpf = versions.mutable_versions();
+
+        // Traverse the versions
+        for (int i = n - 1; i > versionNumber; i--)
+        {
+            notepad::Version *version = versions.mutable_versions(i);
+
+            // Revert each change in the version
+            for (int j = version->changes_size() - 1; j >= 0; j--)
+            {
+                notepad::Change change = version->changes(j);
+                revertChange(notepad, change);
+            }
+
+            // Remove the version
+            versionRpf->DeleteSubrange(i, 1);
+        }
+
+        // Serialize notepad and store it in a file
+        if (!serializeAndStoreNotepad(name, notepad))
+        {
+            return false;
+        }
+
+        // Serialize versions and store it in a file
+        if (!serializeAndStoreVersion(name, versions))
+        {
+            return false;
+        }
+
+        cout << "\nReverted to version " << (versionNumber + 1) << " successfully\n";
         return true;
     }
 };
